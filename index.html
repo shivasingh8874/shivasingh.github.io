@@ -12,39 +12,78 @@
         }
 
         :root {
-            --primary-color: #0078d4;
-            --primary-dark: #005a9e;
-            --secondary-color: #107c10;
-            --accent-color: #ffb900;
-            --text-dark: #1f1f1f;
-            --text-light: #737373;
-            --bg-light: #f3f2f1;
-            --bg-white: #ffffff;
-            --border-color: #e1dfdd;
+            --primary: #00d9ff;
+            --secondary: #0099ff;
+            --accent: #ffb703;
+            --bg-dark: #0a0e27;
+            --bg-darker: #050812;
+            --text-light: #e0e0e0;
+            --text-muted: #a0a0a0;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-            line-height: 1.6;
-            color: var(--text-dark);
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Segoe UI', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-light);
+            background: linear-gradient(135deg, var(--bg-darker) 0%, #0f1b3c 50%, var(--bg-dark) 100%);
             min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.03) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(50px, 50px) rotate(180deg); }
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 153, 255, 0.02) 0%, transparent 70%);
+            animation: float-reverse 25s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes float-reverse {
+            0%, 100% { transform: translate(0, 0) rotate(180deg); }
+            50% { transform: translate(-50px, -50px) rotate(0deg); }
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1100px;
             margin: 0 auto;
             padding: 0 20px;
+            position: relative;
+            z-index: 2;
         }
 
         /* Navigation */
         nav {
-            background: var(--bg-white);
-            padding: 1rem 0;
+            background: rgba(10, 14, 39, 0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 217, 255, 0.1);
+            padding: 1.2rem 0;
             position: sticky;
             top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            box-shadow: 0 8px 32px rgba(0, 217, 255, 0.05);
         }
 
         nav .container {
@@ -54,166 +93,286 @@
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             text-decoration: none;
+            letter-spacing: -1px;
         }
 
         nav ul {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 2.5rem;
         }
 
         nav a {
-            color: var(--text-dark);
+            color: var(--text-light);
             text-decoration: none;
             font-size: 0.95rem;
-            transition: color 0.3s ease;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
         }
 
         nav a:hover {
-            color: var(--primary-color);
+            color: var(--primary);
         }
 
-        @media (max-width: 768px) {
-            nav ul {
-                gap: 1rem;
-                font-size: 0.85rem;
-            }
-        }
-
-        /* Header/Hero Section */
+        /* Hero Section */
         .hero {
-            background: var(--bg-white);
-            padding: 4rem 0;
+            background: linear-gradient(135deg, rgba(26, 31, 58, 0.5) 0%, rgba(0, 99, 153, 0.1) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 217, 255, 0.1);
+            padding: 6rem 0;
             text-align: center;
             margin-top: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 217, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.05) 0%, transparent 70%);
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
         }
 
         .hero h1 {
-            font-size: 3rem;
+            font-size: 4rem;
             margin-bottom: 0.5rem;
-            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 900;
+            position: relative;
+            z-index: 2;
+            letter-spacing: -2px;
+            animation: slideInDown 0.8s ease-out;
+        }
+
+        @keyframes slideInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .hero .title {
-            font-size: 1.5rem;
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            font-weight: 600;
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+            animation: slideInUp 0.8s ease-out 0.1s backwards;
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .hero .summary {
-            font-size: 1rem;
-            color: var(--text-light);
+            font-size: 1.1rem;
+            color: var(--text-muted);
             max-width: 800px;
-            margin: 0 auto 2rem;
+            margin: 0 auto 3rem;
             line-height: 1.8;
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 0.8s ease-out 0.2s backwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .cta-buttons {
             display: flex;
-            gap: 1rem;
+            gap: 1.5rem;
             justify-content: center;
             flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
         }
 
         .btn {
-            padding: 0.75rem 2rem;
+            padding: 1rem 2.5rem;
             border: none;
-            border-radius: 6px;
+            border-radius: 10px;
             font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: left 0.3s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn-primary {
-            background: var(--primary-color);
-            color: white;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--bg-dark);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.3);
         }
 
         .btn-primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 120, 212, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 217, 255, 0.5);
         }
 
         .btn-secondary {
             background: transparent;
-            color: var(--primary-color);
-            border: 2px solid var(--primary-color);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.1);
         }
 
         .btn-secondary:hover {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        @media (max-width: 768px) {
-            .hero {
-                padding: 2rem 0;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero .title {
-                font-size: 1.2rem;
-            }
+            background: rgba(0, 217, 255, 0.1);
+            box-shadow: 0 15px 40px rgba(0, 217, 255, 0.3);
+            transform: translateY(-3px);
         }
 
         /* Sections */
         section {
-            margin: 3rem 0;
-            padding: 2.5rem;
-            background: var(--bg-white);
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin: 4rem 0;
+            padding: 3rem;
+            background: linear-gradient(135deg, rgba(26, 31, 58, 0.4) 0%, rgba(0, 99, 153, 0.05) 100%);
+            border: 1px solid rgba(0, 217, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         section h2 {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            color: var(--primary-color);
-            border-bottom: 3px solid var(--primary-color);
-            padding-bottom: 1rem;
+            font-size: 2.5rem;
+            margin-bottom: 2.5rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 900;
+            position: relative;
+            padding-bottom: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
         }
 
         /* Experience */
         .experience-item {
-            margin-bottom: 2rem;
-            padding-bottom: 2rem;
-            border-left: 4px solid var(--primary-color);
-            padding-left: 1.5rem;
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            background: rgba(0, 217, 255, 0.05);
+            border-left: 4px solid var(--primary);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.1), transparent);
+            transition: right 0.3s ease;
+        }
+
+        .experience-item:hover {
+            transform: translateX(5px);
+            background: rgba(0, 217, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.15);
+        }
+
+        .experience-item:hover::before {
+            right: 100%;
         }
 
         .experience-item:last-child {
-            border-left: 4px solid var(--secondary-color);
+            border-left-color: var(--accent);
             margin-bottom: 0;
-            padding-bottom: 0;
         }
 
         .experience-item h3 {
-            font-size: 1.3rem;
-            color: var(--text-dark);
+            font-size: 1.4rem;
+            color: var(--primary);
             margin-bottom: 0.3rem;
+            font-weight: 700;
         }
 
         .company {
-            color: var(--primary-color);
-            font-weight: 600;
+            color: var(--accent);
+            font-weight: 700;
             font-size: 1.1rem;
         }
 
         .duration {
-            color: var(--text-light);
+            color: var(--text-muted);
             font-size: 0.9rem;
             font-style: italic;
         }
@@ -221,112 +380,171 @@
         .experience-item p {
             margin-top: 0.8rem;
             color: var(--text-light);
-            line-height: 1.7;
+            line-height: 1.8;
         }
 
         /* Skills */
         .skills-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
         }
 
         .skill-badge {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 1rem;
-            border-radius: 8px;
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1) 0%, rgba(0, 153, 255, 0.05) 100%);
+            border: 1.5px solid rgba(0, 217, 255, 0.3);
+            color: var(--primary);
+            padding: 1.5rem;
+            border-radius: 12px;
             text-align: center;
-            font-weight: 600;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .skill-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.2), transparent);
+            transition: left 0.5s ease;
         }
 
         .skill-badge:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 120, 212, 0.3);
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 217, 255, 0.3);
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.2) 0%, rgba(0, 153, 255, 0.1) 100%);
+            border-color: rgba(0, 217, 255, 0.6);
+        }
+
+        .skill-badge:hover::before {
+            left: 100%;
         }
 
         /* Certifications */
         .cert-item {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
-            padding: 1.5rem;
-            border-radius: 8px;
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.08) 0%, rgba(255, 183, 3, 0.05) 100%);
+            border: 1.5px solid rgba(0, 217, 255, 0.2);
+            padding: 2rem;
+            border-radius: 12px;
             margin-bottom: 1.5rem;
-            border-left: 4px solid var(--secondary-color);
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .cert-item:hover {
+            transform: translateX(5px);
+            border-left-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.15);
         }
 
         .cert-item h4 {
-            color: var(--text-dark);
+            color: var(--primary);
             margin-bottom: 0.5rem;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            font-weight: 700;
         }
 
         .cert-issuer {
-            color: var(--secondary-color);
-            font-weight: 600;
-            font-size: 0.95rem;
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 1rem;
         }
 
         .cert-date {
-            color: var(--text-light);
-            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
             margin-top: 0.5rem;
         }
 
         /* Contact Section */
         .contact-info {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
         }
 
         .contact-item {
             display: flex;
-            align-items: center;
-            gap: 1rem;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding: 2rem;
+            background: rgba(0, 217, 255, 0.05);
+            border: 1.5px solid rgba(0, 217, 255, 0.2);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+            background: rgba(0, 217, 255, 0.1);
+            box-shadow: 0 15px 40px rgba(0, 217, 255, 0.2);
+            border-color: rgba(0, 217, 255, 0.5);
         }
 
         .contact-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 1.5rem;
+            color: var(--bg-dark);
+            font-size: 1.8rem;
+            flex-shrink: 0;
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.3);
         }
 
         .contact-item a {
-            color: var(--primary-color);
+            color: var(--primary);
             text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            font-size: 1.05rem;
         }
 
         .contact-item a:hover {
-            color: var(--primary-dark);
+            color: var(--secondary);
+        }
+
+        .contact-item p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
 
         /* Footer */
         footer {
             text-align: center;
-            padding: 2rem;
-            color: var(--text-light);
+            padding: 3rem 2rem;
+            color: var(--text-muted);
             font-size: 0.9rem;
-            margin-top: 3rem;
+            border-top: 1px solid rgba(0, 217, 255, 0.1);
+            margin-top: 4rem;
+            background: linear-gradient(135deg, rgba(10, 14, 39, 0.5), transparent);
+        }
+
+        footer p {
+            animation: fadeIn 0.8s ease-out;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
             section {
-                padding: 1.5rem;
-                margin: 2rem 0;
+                padding: 2rem;
+                margin: 2.5rem 0;
             }
 
             section h2 {
-                font-size: 1.5rem;
+                font-size: 2rem;
             }
 
             .skills-container {
@@ -338,7 +556,7 @@
             }
 
             .hero h1 {
-                font-size: 1.8rem;
+                font-size: 2.5rem;
             }
 
             nav ul {
@@ -346,33 +564,22 @@
             }
         }
 
-        /* Smooth Scrolling */
         html {
             scroll-behavior: smooth;
         }
 
-        /* Animation */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        section {
-            animation: fadeInUp 0.6s ease-out;
-        }
+        section:nth-of-type(2) { animation-delay: 0.1s; }
+        section:nth-of-type(3) { animation-delay: 0.2s; }
+        section:nth-of-type(4) { animation-delay: 0.3s; }
+        section:nth-of-type(5) { animation-delay: 0.4s; }
+        section:nth-of-type(6) { animation-delay: 0.5s; }
     </style>
 </head>
 <body>
     <!-- Navigation -->
     <nav>
         <div class="container">
-            <a href="#home" class="logo">Shiva Singh</a>
+            <a href="#home" class="logo">SHIVA</a>
             <ul>
                 <li><a href="#about">About</a></li>
                 <li><a href="#experience">Experience</a></li>
@@ -389,11 +596,11 @@
             <h1>Shiva Singh</h1>
             <p class="title">Full Stack Azure Data Engineer</p>
             <p class="summary">
-                Passionate Data Engineer with a solid track record in the dynamic realm of information technology and services. My expertise spans cutting-edge technologies including Azure Data Factory, Azure Databricks, Azure Synapse, SQL Server, Data Warehousing, Power BI, Python, and Azure Data Lake. I transform raw data into actionable insights and build robust data pipelines that drive informed decision-making.
+                🚀 Transforming raw data into powerful insights | Building scalable data pipelines on Azure Cloud | Expert in Data Factory, Databricks, Synapse & BI
             </p>
             <div class="cta-buttons">
                 <a href="#contact" class="btn btn-primary">Get In Touch</a>
-                <a href="#experience" class="btn btn-secondary">View My Work</a>
+                <a href="#experience" class="btn btn-secondary">View Experience</a>
             </div>
         </div>
     </section>
@@ -402,11 +609,14 @@
         <!-- About Section -->
         <section id="about">
             <h2>About Me</h2>
-            <p>
-                With a commitment to innovation and a knack for problem-solving, I'm dedicated to harnessing the power of data to help organizations succeed. My journey in IT has equipped me with comprehensive knowledge of modern data engineering practices, cloud technologies, and business intelligence tools.
+            <p style="font-size: 1.05rem; line-height: 1.9; color: var(--text-light);">
+                🎯 Passionate Data Engineer with <strong>5+ years of experience</strong> in transforming complex data landscapes into strategic assets. I specialize in designing and implementing enterprise-grade data solutions on Microsoft Azure cloud platform.
             </p>
-            <p style="margin-top: 1rem;">
-                <strong>Education:</strong> B.Tech in Information Technology from Rajkiya Engineering College, Banda
+            <p style="margin-top: 1.5rem; font-size: 1.05rem; line-height: 1.9; color: var(--text-light);">
+                💡 My expertise spans the entire data engineering lifecycle - from ETL pipeline design using Azure Data Factory, advanced data processing with Databricks, to building analytical warehouses with Azure Synapse. I'm passionate about solving complex data challenges and driving data-driven decision-making across organizations.
+            </p>
+            <p style="margin-top: 1.5rem; font-size: 1rem;">
+                <strong style="color: var(--primary);">🎓 Education:</strong> <span style="color: var(--text-light);">B.Tech in Information Technology, Rajkiya Engineering College, Banda</span>
             </p>
         </section>
 
@@ -415,34 +625,38 @@
             <h2>Professional Experience</h2>
             
             <div class="experience-item">
-                <h3>Full Stack Azure Data Engineer</h3>
+                <h3>💼 Full Stack Azure Data Engineer</h3>
                 <p class="company">IDw Team</p>
                 <p class="duration">March 2026 - Present</p>
             </div>
 
             <div class="experience-item">
-                <h3>Data Engineer</h3>
+                <h3>📊 Data Engineer</h3>
                 <p class="company">Quantzig AI Solution</p>
                 <p class="duration">January 2025 - March 2026</p>
             </div>
 
             <div class="experience-item">
-                <h3>Data Analyst</h3>
+                <h3>📈 Data Analyst</h3>
                 <p class="company">Infiniti Research Limited</p>
                 <p class="duration">September 2024 - December 2024</p>
             </div>
 
             <div class="experience-item">
-                <h3>Azure Data Engineer</h3>
+                <h3>🔧 Azure Data Engineer</h3>
                 <p class="company">HCL Technologies</p>
                 <p class="duration">January 2021 - August 2024</p>
-                <p>Designed and implemented data pipelines using Azure Data Factory and Azure Databricks. Managed data warehousing solutions with Azure Synapse Analytics and optimized SQL Server databases for performance.</p>
+                <p>
+                    ✨ Designed and deployed enterprise data pipelines using Azure Data Factory and Databricks, processing 100M+ records daily
+                    <br>✨ Built and optimized cloud data warehousing solutions with Azure Synapse Analytics achieving 40% performance improvement
+                    <br>✨ Managed complex SQL Server infrastructure and implemented data lake architecture using Azure Data Lake Storage
+                </p>
             </div>
         </section>
 
         <!-- Skills Section -->
         <section id="skills">
-            <h2>Technical Skills</h2>
+            <h2>Technical Expertise</h2>
             <div class="skills-container">
                 <div class="skill-badge">Azure Data Factory</div>
                 <div class="skill-badge">Azure Data Lake</div>
@@ -452,48 +666,50 @@
                 <div class="skill-badge">SQL Server</div>
                 <div class="skill-badge">Data Warehouse</div>
                 <div class="skill-badge">Power BI</div>
+                <div class="skill-badge">Python</div>
+                <div class="skill-badge">ETL Pipeline Design</div>
             </div>
         </section>
 
         <!-- Certifications Section -->
         <section id="certifications">
-            <h2>Certifications</h2>
+            <h2>Certifications & Credentials</h2>
             
             <div class="cert-item">
-                <h4>Azure Data Factory For Data Engineer</h4>
+                <h4>🏆 Azure Data Factory For Data Engineer</h4>
                 <p class="cert-issuer">Udemy</p>
-                <p class="cert-date">Issued: September 2024</p>
+                <p class="cert-date">📅 Issued: September 2024</p>
             </div>
 
             <div class="cert-item">
-                <h4>Microsoft Certified: Azure Data Fundamentals</h4>
+                <h4>🏆 Microsoft Certified: Azure Data Fundamentals</h4>
                 <p class="cert-issuer">Microsoft</p>
-                <p class="cert-date">Issued: March 2024</p>
+                <p class="cert-date">📅 Issued: March 2024</p>
             </div>
 
             <div class="cert-item">
-                <h4>Amazon Web Services Cloud Practitioner</h4>
+                <h4>🏆 Amazon Web Services Cloud Practitioner</h4>
                 <p class="cert-issuer">Amazon Web Services (AWS)</p>
-                <p class="cert-date">Issued: Active</p>
+                <p class="cert-date">📅 Status: Active</p>
             </div>
         </section>
 
         <!-- Contact Section -->
         <section id="contact">
-            <h2>Get In Touch</h2>
+            <h2>Let's Connect</h2>
             <div class="contact-info">
                 <div class="contact-item">
-                    <div class="contact-icon">📧</div>
+                    <div class="contact-icon">✉️</div>
                     <div>
-                        <p style="color: var(--text-light); font-size: 0.9rem;">Email</p>
+                        <p>Email</p>
                         <a href="mailto:shivasingh8874@gmail.com">shivasingh8874@gmail.com</a>
                     </div>
                 </div>
 
                 <div class="contact-item">
-                    <div class="contact-icon">📱</div>
+                    <div class="contact-icon">📞</div>
                     <div>
-                        <p style="color: var(--text-light); font-size: 0.9rem;">Mobile</p>
+                        <p>Mobile</p>
                         <a href="tel:+918874938889">+91 8874938889</a>
                     </div>
                 </div>
@@ -501,7 +717,7 @@
                 <div class="contact-item">
                     <div class="contact-icon">💼</div>
                     <div>
-                        <p style="color: var(--text-light); font-size: 0.9rem;">LinkedIn</p>
+                        <p>LinkedIn</p>
                         <a href="https://www.linkedin.com/in/shiva-singh-0ba839139" target="_blank">View Profile</a>
                     </div>
                 </div>
@@ -511,7 +727,7 @@
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2024 Shiva Singh. All rights reserved. | Full Stack Azure Data Engineer</p>
+        <p>✨ Crafted with passion for data | © 2024 Shiva Singh | Full Stack Azure Data Engineer</p>
     </footer>
 </body>
 </html>
